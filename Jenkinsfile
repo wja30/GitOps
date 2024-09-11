@@ -8,9 +8,11 @@ pipeline {
       }
     }
     stage('Apply Kubernetes files') {
-    withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://192.168.56.30']) {
-      sh 'kubectl apply -f deployment.yaml'
-    }
+	steps{
+    		withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://192.168.56.30']) {
+      		sh 'kubectl apply -f deployment.yaml'
+    		}
+	}
   }
 }
 }
