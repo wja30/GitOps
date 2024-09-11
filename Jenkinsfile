@@ -7,11 +7,10 @@ pipeline {
         git url: 'https://github.com/wja30/GitOps.git', branch: 'main'
       }
     }
-    stage('k8s deploy'){
-      steps {
-        kubernetesDeploy(kubeconfigId: 'kubeconfig',
-                         configs: '*.yaml')
-      }
-    }    
+    stage('Apply Kubernetes files') {
+    withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://192.168.56.30']) {
+      sh 'kubectl apply -f deployment.yaml'
+    }
   }
+}
 }
